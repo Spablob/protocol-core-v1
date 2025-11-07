@@ -25,7 +25,6 @@ import { stdJson } from "forge-std/StdJson.sol";
 import { BaseTest } from "test/foundry/utils/BaseTest.t.sol";
 // solhint-disable-next-line
 import { console2 } from "forge-std/console2.sol";
-import { UUPSUpgradeable } from "@openzeppelin/contracts/proxy/utils/UUPSUpgradeable.sol";
 
 contract GrantRolesToSafeTest is BaseTest {
     event RoleLabel(uint64 indexed roleId, string label);
@@ -75,11 +74,10 @@ contract GrantRolesToSafeTest is BaseTest {
         protocolPauseAdminAddr = 0xdd661f55128A80437A0c0BDA6E13F214A3B2EB24;
 
         uint256 chainId = block.chainid;
-        if (chainId == 1514) { 
+        if (chainId == 1514) {
             delay = 5 days;
             securityCouncilSafeMultisig = 0x25D2605b2C768082A14E79713114389d0eC297D8;
             governanceSafeMultisig = 0xF07cA4b61022F0399C1511E7E668A57567f2138B;
-            
         } else if (chainId == 1315) {
             delay = 10 minutes;
             securityCouncilSafeMultisig = 0xC9a862Df1872402c4eAcbb8402F9BE628B52d270;
@@ -136,7 +134,7 @@ contract GrantRolesToSafeTest is BaseTest {
         Multicall(address(protocolAccessManager)).multicall(executeCalls);
 
         bytes memory data = abi.encodeWithSelector(GroupNFT.setLicensingImageUrl.selector, "https://example.com");
-        (bytes32 operationId, ) = protocolAccessManager.schedule(groupNftAddr, data, 0);        
+        (bytes32 operationId, ) = protocolAccessManager.schedule(groupNftAddr, data, 0);
         vm.stopPrank();
 
         assertEq(protocolAccessManager.getSchedule(operationId), block.timestamp + delay);
@@ -147,7 +145,7 @@ contract GrantRolesToSafeTest is BaseTest {
         assertEq(protocolAccessManager.getSchedule(operationId), 0);
     }
 
-    function test_LicenseToken_setLicensingImageUrl() public { 
+    function test_LicenseToken_setLicensingImageUrl() public {
         vm.startPrank(governanceSafeMultisig);
         Multicall(address(protocolAccessManager)).multicall(scheduleCalls);
         skip(delay + 1);
@@ -239,7 +237,11 @@ contract GrantRolesToSafeTest is BaseTest {
         skip(delay + 1);
         Multicall(address(protocolAccessManager)).multicall(executeCalls);
 
-        bytes memory data = abi.encodeWithSelector(DisputeModule.setArbitrationRelayer.selector, address(1), address(1));
+        bytes memory data = abi.encodeWithSelector(
+            DisputeModule.setArbitrationRelayer.selector,
+            address(1),
+            address(1)
+        );
         (bytes32 operationId, ) = protocolAccessManager.schedule(disputeModuleAddr, data, 0);
         vm.stopPrank();
 
@@ -307,7 +309,12 @@ contract GrantRolesToSafeTest is BaseTest {
         skip(delay + 1);
         Multicall(address(protocolAccessManager)).multicall(executeCalls);
 
-        bytes memory data = abi.encodeWithSelector(ArbitrationPolicyUMA.setLiveness.selector, uint64(100), uint64(100), uint32(100));
+        bytes memory data = abi.encodeWithSelector(
+            ArbitrationPolicyUMA.setLiveness.selector,
+            uint64(100),
+            uint64(100),
+            uint32(100)
+        );
         (bytes32 operationId, ) = protocolAccessManager.schedule(arbitrationPolicyUmaAddr, data, 0);
         vm.stopPrank();
 
@@ -493,7 +500,12 @@ contract GrantRolesToSafeTest is BaseTest {
         skip(delay + 1);
         Multicall(address(protocolAccessManager)).multicall(executeCalls);
 
-        bytes memory data = abi.encodeWithSelector(IPAssetRegistry.setRegistrationFee.selector, address(1), address(1), uint96(100));
+        bytes memory data = abi.encodeWithSelector(
+            IPAssetRegistry.setRegistrationFee.selector,
+            address(1),
+            address(1),
+            uint96(100)
+        );
         (bytes32 operationId, ) = protocolAccessManager.schedule(ipAssetRegistryAddr, data, 0);
         vm.stopPrank();
 
@@ -510,7 +522,11 @@ contract GrantRolesToSafeTest is BaseTest {
         skip(delay + 1);
         Multicall(address(protocolAccessManager)).multicall(executeCalls);
 
-        bytes memory data = abi.encodeWithSelector(LicenseRegistry.setDefaultLicenseTerms.selector, address(1), uint256(1));
+        bytes memory data = abi.encodeWithSelector(
+            LicenseRegistry.setDefaultLicenseTerms.selector,
+            address(1),
+            uint256(1)
+        );
         (bytes32 operationId, ) = protocolAccessManager.schedule(licenseRegistryAddr, data, 0);
         vm.stopPrank();
 
@@ -544,7 +560,11 @@ contract GrantRolesToSafeTest is BaseTest {
         skip(delay + 1);
         Multicall(address(protocolAccessManager)).multicall(executeCalls);
 
-        bytes memory data = abi.encodeWithSelector(ModuleRegistry.registerModuleType.selector, "TestModule", bytes4(keccak256("testModule")));
+        bytes memory data = abi.encodeWithSelector(
+            ModuleRegistry.registerModuleType.selector,
+            "TestModule",
+            bytes4(keccak256("testModule"))
+        );
         (bytes32 operationId, ) = protocolAccessManager.schedule(moduleRegistryAddr, data, 0);
         vm.stopPrank();
 
@@ -578,7 +598,11 @@ contract GrantRolesToSafeTest is BaseTest {
         skip(delay + 1);
         Multicall(address(protocolAccessManager)).multicall(executeCalls);
 
-        bytes memory data = abi.encodeWithSelector(bytes4(keccak256("registerModule(string,address)")), "TestModule", address(1));
+        bytes memory data = abi.encodeWithSelector(
+            bytes4(keccak256("registerModule(string,address)")),
+            "TestModule",
+            address(1)
+        );
         (bytes32 operationId, ) = protocolAccessManager.schedule(moduleRegistryAddr, data, 0);
         vm.stopPrank();
 
@@ -595,7 +619,12 @@ contract GrantRolesToSafeTest is BaseTest {
         skip(delay + 1);
         Multicall(address(protocolAccessManager)).multicall(executeCalls);
 
-        bytes memory data = abi.encodeWithSelector(bytes4(keccak256("registerModule(string,address,string)")), "TestModule", address(1), "TestModule");
+        bytes memory data = abi.encodeWithSelector(
+            bytes4(keccak256("registerModule(string,address,string)")),
+            "TestModule",
+            address(1),
+            "TestModule"
+        );
         (bytes32 operationId, ) = protocolAccessManager.schedule(moduleRegistryAddr, data, 0);
         vm.stopPrank();
 
@@ -651,12 +680,18 @@ contract GrantRolesToSafeTest is BaseTest {
         Multicall(address(protocolAccessManager)).multicall(scheduleCalls);
         skip(delay + 1);
 
-        (bool isMemberBefore, uint32 executionDelayBefore) = protocolAccessManager.hasRole(ProtocolAdmin.CANCELLABLE_ADMIN_ROLE, governanceSafeMultisig);
+        (bool isMemberBefore, uint32 executionDelayBefore) = protocolAccessManager.hasRole(
+            ProtocolAdmin.CANCELLABLE_ADMIN_ROLE,
+            governanceSafeMultisig
+        );
 
         Multicall(address(protocolAccessManager)).multicall(executeCalls);
 
-        (bool isMemberAfter, uint32 executionDelayAfter) = protocolAccessManager.hasRole(ProtocolAdmin.CANCELLABLE_ADMIN_ROLE, governanceSafeMultisig);
-        
+        (bool isMemberAfter, uint32 executionDelayAfter) = protocolAccessManager.hasRole(
+            ProtocolAdmin.CANCELLABLE_ADMIN_ROLE,
+            governanceSafeMultisig
+        );
+
         assertEq(isMemberBefore, false);
         assertEq(executionDelayBefore, 0);
         assertEq(isMemberAfter, true);
