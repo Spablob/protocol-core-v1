@@ -22,10 +22,10 @@ contract PauseTest is BaseTest {
 
     function setUp() public override {
         address safeGovernanceMultisig = 0xF07cA4b61022F0399C1511E7E668A57567f2138B;
-        
+
         uint256 forkId = vm.createFork("https://mainnet.storyrpc.io/");
         vm.selectFork(forkId);
-        
+
         vm.startPrank(safeGovernanceMultisig);
 
         Pause pauseScript = new Pause();

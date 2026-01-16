@@ -7,6 +7,7 @@ import { Script } from "forge-std/Script.sol";
 import { console2 } from "forge-std/console2.sol";
 
 contract Pause is Script {
+    // Mainnet addresses
     address constant ACCESS_CONTROLLER = 0xcCF37d0a503Ee1D4C11208672e622ed3DFB2275a;
     address constant DISPUTE_MODULE = 0x9b7A9c70AFF961C799110954fc06F3093aeb94C5;
     address constant ARBITRATION_POLICY_UMA = 0xfFD98c3877B8789124f02C7E8239A4b0Ef11E936;
@@ -19,7 +20,8 @@ contract Pause is Script {
     address constant IP_ASSET_REGISTRY = 0x77319B4031e6eF1250907aa00018B8B1c67a244b;
     // TODO: add staking contract
 
-    // TODO: add one-liner for HW wallets
+    // Run with Ledger HW wallet: forge script script/foundry/pause/pause.s.sol --rpc-url https://mainnet.storyrpc.io/ --ledger --broadcast
+    // Run with Trezor HW wallet: forge script script/foundry/pause/pause.s.sol --rpc-url https://mainnet.storyrpc.io/ --trezor --broadcast
     function run() public {
         console2.log("Initiate pausing");
         vm.startBroadcast();
