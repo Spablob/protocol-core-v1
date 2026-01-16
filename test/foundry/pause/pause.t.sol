@@ -6,7 +6,6 @@ import { ProtocolPausableUpgradeable } from "../../../contracts/pause/ProtocolPa
 import { Pause } from "../../../script/foundry/pause/pause.s.sol";
 
 import { BaseTest } from "../utils/BaseTest.t.sol";
-import { console2 } from "forge-std/console2.sol";
 
 contract PauseTest is BaseTest {
     address constant ACCESS_CONTROLLER = 0xcCF37d0a503Ee1D4C11208672e622ed3DFB2275a;
