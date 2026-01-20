@@ -118,7 +118,7 @@ contract GrantPauseRoleToSCTest is BaseTest {
         try vm.removeFile(string.concat(OUTPUT_DIR, "1514", "/grant-pause-role-to-sc-cancel.json")) {} catch {}
         try vm.removeFile(string.concat(OUTPUT_DIR, "1514", "/grant-pause-role-to-sc-execute.json")) {} catch {}
     }
- 
+
     function test_GrantPauseRoleToSC_Mainnet_Cancel() public {
         // Fork mainnet
         uint256 forkId = vm.createFork("https://mainnet.storyrpc.io/");
