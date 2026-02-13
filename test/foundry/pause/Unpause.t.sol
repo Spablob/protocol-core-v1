@@ -3,11 +3,12 @@ pragma solidity 0.8.26;
 
 import { ProtocolPausableUpgradeable } from "../../../contracts/pause/ProtocolPausableUpgradeable.sol";
 
-import { Pause } from "../../../script/foundry/pause/pause.s.sol";
+import { Pause } from "../../../script/foundry/pause/Pause.s.sol";
+import { Unpause } from "../../../script/foundry/pause/Unpause.s.sol";
 
 import { BaseTest } from "../utils/BaseTest.t.sol";
 
-contract PauseTest is BaseTest {
+contract UnpauseTest is BaseTest {
     address constant ACCESS_CONTROLLER = 0xcCF37d0a503Ee1D4C11208672e622ed3DFB2275a;
     address constant DISPUTE_MODULE = 0x9b7A9c70AFF961C799110954fc06F3093aeb94C5;
     address constant ARBITRATION_POLICY_UMA = 0xfFD98c3877B8789124f02C7E8239A4b0Ef11E936;
@@ -34,19 +35,25 @@ contract PauseTest is BaseTest {
             ProtocolPausableUpgradeable(contractsToPause[i]).pause();
         }
 
+        Unpause unpauseScript = new Unpause();
+        address[] memory contractsToUnpause = unpauseScript.getPausableContracts();
+        for (uint256 i = 0; i < contractsToUnpause.length; i++) {
+            ProtocolPausableUpgradeable(contractsToUnpause[i]).unpause();
+        }
+
         vm.stopPrank();
     }
 
-    function test_AllContractsPaused() public {
-        assertTrue(ProtocolPausableUpgradeable(ACCESS_CONTROLLER).paused());
-        assertTrue(ProtocolPausableUpgradeable(DISPUTE_MODULE).paused());
-        assertTrue(ProtocolPausableUpgradeable(ARBITRATION_POLICY_UMA).paused());
-        assertTrue(ProtocolPausableUpgradeable(EVEN_SPLIT_GROUP_POOL).paused());
-        assertTrue(ProtocolPausableUpgradeable(GROUPING_MODULE).paused());
-        assertTrue(ProtocolPausableUpgradeable(LICENSING_MODULE).paused());
-        assertTrue(ProtocolPausableUpgradeable(ROYALTY_MODULE).paused());
-        assertTrue(ProtocolPausableUpgradeable(ROYALTY_POLICY_LAP).paused());
-        assertTrue(ProtocolPausableUpgradeable(ROYALTY_POLICY_LRP).paused());
-        assertTrue(ProtocolPausableUpgradeable(IP_ASSET_REGISTRY).paused());
+    function test_AllContractsUnpaused() public {
+        assertFalse(ProtocolPausableUpgradeable(ACCESS_CONTROLLER).paused());
+        assertFalse(ProtocolPausableUpgradeable(DISPUTE_MODULE).paused());
+        assertFalse(ProtocolPausableUpgradeable(ARBITRATION_POLICY_UMA).paused());
+        assertFalse(ProtocolPausableUpgradeable(EVEN_SPLIT_GROUP_POOL).paused());
+        assertFalse(ProtocolPausableUpgradeable(GROUPING_MODULE).paused());
+        assertFalse(ProtocolPausableUpgradeable(LICENSING_MODULE).paused());
+        assertFalse(ProtocolPausableUpgradeable(ROYALTY_MODULE).paused());
+        assertFalse(ProtocolPausableUpgradeable(ROYALTY_POLICY_LAP).paused());
+        assertFalse(ProtocolPausableUpgradeable(ROYALTY_POLICY_LRP).paused());
+        assertFalse(ProtocolPausableUpgradeable(IP_ASSET_REGISTRY).paused());
     }
 }
