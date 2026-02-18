@@ -24,7 +24,6 @@ contract GrantNewAdminRole is Script, AccessManagerOperations {
     uint32 delay;
     address guardianSafeMultisig;
     address governanceSafeMultisig;
-    address protocolAccessManagerAddr;
     address groupNftAddr;
     address licenseTokenAddr;
     address ipGraphACLAddr;
@@ -55,7 +54,7 @@ contract GrantNewAdminRole is Script, AccessManagerOperations {
             governanceSafeMultisig = 0x4B089bF9340DdB02a011471Eaa7d8D81C60CB524;
         }
 
-        protocolAccessManagerAddr = 0xFdece7b8a2f55ceC33b53fd28936B4B1e3153d53;
+        protocolAccessManager = AccessManager(0xFdece7b8a2f55ceC33b53fd28936B4B1e3153d53);
         groupNftAddr = 0x4709798FeA84C84ae2475fF0c25344115eE1529f;
         licenseTokenAddr = 0xFe3838BFb30B34170F00030B52eA4893d8aAC6bC;
         ipGraphACLAddr = 0x1640A22a8A086747cD377b73954545e2Dfcc9Cad;
@@ -82,7 +81,7 @@ contract GrantNewAdminRole is Script, AccessManagerOperations {
         selectorsGroupNFT[0] = GroupNFT.setLicensingImageUrl.selector;
         _generateAction(
             from,
-            address(protocolAccessManagerAddr),
+            address(protocolAccessManager),
             0,
             abi.encodeWithSelector(AccessManager.setTargetFunctionRole.selector, groupNftAddr, selectorsGroupNFT, ProtocolAdmin.CANCELLABLE_ADMIN_ROLE),
             delay
@@ -92,7 +91,7 @@ contract GrantNewAdminRole is Script, AccessManagerOperations {
         selectorsLicenseToken[0] = LicenseToken.setLicensingImageUrl.selector;
         _generateAction(
             from,
-            address(protocolAccessManagerAddr),
+            address(protocolAccessManager),
             0,
             abi.encodeWithSelector(AccessManager.setTargetFunctionRole.selector, licenseTokenAddr, selectorsLicenseToken, ProtocolAdmin.CANCELLABLE_ADMIN_ROLE),
             delay
@@ -103,7 +102,7 @@ contract GrantNewAdminRole is Script, AccessManagerOperations {
         selectorsIPGraphACL[1] = IPGraphACL.revokeWhitelistedAddress.selector;
         _generateAction(
             from,
-            address(protocolAccessManagerAddr),
+            address(protocolAccessManager),
             0,
             abi.encodeWithSelector(AccessManager.setTargetFunctionRole.selector, ipGraphACLAddr, selectorsIPGraphACL, ProtocolAdmin.CANCELLABLE_ADMIN_ROLE),
             delay
@@ -117,7 +116,7 @@ contract GrantNewAdminRole is Script, AccessManagerOperations {
         selectorsDisputeModule[4] = DisputeModule.setArbitrationPolicyCooldown.selector;
         _generateAction(
             from,
-            address(protocolAccessManagerAddr),
+            address(protocolAccessManager),
             0,
             abi.encodeWithSelector(AccessManager.setTargetFunctionRole.selector, disputeModuleAddr, selectorsDisputeModule, ProtocolAdmin.CANCELLABLE_ADMIN_ROLE),
             delay
@@ -129,7 +128,7 @@ contract GrantNewAdminRole is Script, AccessManagerOperations {
         selectorsArbitrationPolicyUMA[2] = ArbitrationPolicyUMA.setMaxBond.selector;
         _generateAction(
             from,
-            address(protocolAccessManagerAddr),
+            address(protocolAccessManager),
             0,
             abi.encodeWithSelector(AccessManager.setTargetFunctionRole.selector, arbitrationPolicyUmaAddr, selectorsArbitrationPolicyUMA, ProtocolAdmin.CANCELLABLE_ADMIN_ROLE),
             delay
@@ -139,7 +138,7 @@ contract GrantNewAdminRole is Script, AccessManagerOperations {
         selectorsGroupingModule[0] = GroupingModule.whitelistGroupRewardPool.selector;
         _generateAction(
             from,
-            address(protocolAccessManagerAddr),
+            address(protocolAccessManager),
             0,
             abi.encodeWithSelector(AccessManager.setTargetFunctionRole.selector, groupingModuleAddr, selectorsGroupingModule, ProtocolAdmin.CANCELLABLE_ADMIN_ROLE),
             delay
@@ -153,7 +152,7 @@ contract GrantNewAdminRole is Script, AccessManagerOperations {
         selectorsRoyaltyModule[4] = RoyaltyModule.whitelistRoyaltyToken.selector;
         _generateAction(
             from,
-            address(protocolAccessManagerAddr),
+            address(protocolAccessManager),
             0,
             abi.encodeWithSelector(AccessManager.setTargetFunctionRole.selector, royaltyModuleAddr, selectorsRoyaltyModule, ProtocolAdmin.CANCELLABLE_ADMIN_ROLE),
             delay
@@ -163,7 +162,7 @@ contract GrantNewAdminRole is Script, AccessManagerOperations {
         selectorsVaultController[0] = VaultController.setIpRoyaltyVaultBeacon.selector;
         _generateAction(
             from,
-            address(protocolAccessManagerAddr),
+            address(protocolAccessManager),
             0,
             abi.encodeWithSelector(AccessManager.setTargetFunctionRole.selector, royaltyModuleAddr, selectorsVaultController, ProtocolAdmin.CANCELLABLE_ADMIN_ROLE),
             delay
@@ -174,7 +173,7 @@ contract GrantNewAdminRole is Script, AccessManagerOperations {
         selectorsProtocolPauseAdmin[1] = ProtocolPauseAdmin.removePausable.selector;
         _generateAction(
             from,
-            address(protocolAccessManagerAddr),
+            address(protocolAccessManager),
             0,
             abi.encodeWithSelector(AccessManager.setTargetFunctionRole.selector, protocolPauseAdminAddr, selectorsProtocolPauseAdmin, ProtocolAdmin.CANCELLABLE_ADMIN_ROLE),
             delay
@@ -184,7 +183,7 @@ contract GrantNewAdminRole is Script, AccessManagerOperations {
         selectorsIPAssetRegistry[0] = IPAssetRegistry.setRegistrationFee.selector;
         _generateAction(
             from,
-            address(protocolAccessManagerAddr),
+            address(protocolAccessManager),
             0,
             abi.encodeWithSelector(AccessManager.setTargetFunctionRole.selector, ipAssetRegistryAddr, selectorsIPAssetRegistry, ProtocolAdmin.CANCELLABLE_ADMIN_ROLE),
             delay
@@ -195,7 +194,7 @@ contract GrantNewAdminRole is Script, AccessManagerOperations {
         selectorsLicenseRegistry[1] = LicenseRegistry.registerLicenseTemplate.selector;
         _generateAction(
             from,
-            address(protocolAccessManagerAddr),
+            address(protocolAccessManager),
             0,
             abi.encodeWithSelector(AccessManager.setTargetFunctionRole.selector, licenseRegistryAddr, selectorsLicenseRegistry, ProtocolAdmin.CANCELLABLE_ADMIN_ROLE),
             delay
@@ -209,7 +208,7 @@ contract GrantNewAdminRole is Script, AccessManagerOperations {
         selectorsModuleRegistry[4] = ModuleRegistry.removeModule.selector;
         _generateAction(
             from,
-            address(protocolAccessManagerAddr),
+            address(protocolAccessManager),
             0,
             abi.encodeWithSelector(AccessManager.setTargetFunctionRole.selector, moduleRegistryAddr, selectorsModuleRegistry, ProtocolAdmin.CANCELLABLE_ADMIN_ROLE),
             delay
@@ -218,7 +217,7 @@ contract GrantNewAdminRole is Script, AccessManagerOperations {
         // create label for role
         _generateAction(
             from,
-            address(protocolAccessManagerAddr),
+            address(protocolAccessManager),
             0,
             abi.encodeWithSelector(AccessManager.labelRole.selector, ProtocolAdmin.CANCELLABLE_ADMIN_ROLE, ProtocolAdmin.CANCELLABLE_ADMIN_ROLE_LABEL),
             delay
@@ -227,7 +226,7 @@ contract GrantNewAdminRole is Script, AccessManagerOperations {
         // set guardian role for new admin role
         _generateAction(
             from,
-            address(protocolAccessManagerAddr),
+            address(protocolAccessManager),
             0,
             abi.encodeWithSelector(AccessManager.setRoleGuardian.selector, ProtocolAdmin.CANCELLABLE_ADMIN_ROLE, ProtocolAdmin.GUARDIAN_ROLE),
             delay
@@ -236,7 +235,7 @@ contract GrantNewAdminRole is Script, AccessManagerOperations {
         // grant new admin role to governanceSafeMultisig
         _generateAction(
             from,
-            address(protocolAccessManagerAddr),
+            address(protocolAccessManager),
             0,
             abi.encodeWithSelector(AccessManager.grantRole.selector, ProtocolAdmin.CANCELLABLE_ADMIN_ROLE, governanceSafeMultisig, delay),
             delay
